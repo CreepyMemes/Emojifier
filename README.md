@@ -1,6 +1,8 @@
-
 # Emojifier
-#### A program that converts images to emoji art 
+
+A program that converts images to emoji art 
+
+![](https://i.imgur.com/5bFqLjh.jpeg)
 
 ## How to use Emojifier? <img src="https://images.emojiterra.com/twitter/v13.1/512px/1f914.png" alt="image" width="30"/>
 ### C++ 
