@@ -6,7 +6,7 @@ from glob import glob
 def progress(progress): #progress [0.0 -> 1.0]
     barLength = 50 
     pos = progress*barLength
-    print( f"Progress: [{'#'*int(pos)}{'-'*(barLength-int(pos))}]  {int(progress * 100)} %\r", end='') 
+    print( f"Progress: [{'#'*int(pos)}{'-'*(barLength-int(pos))}]  {int(progress * 100)} %", end='\r') 
 
 #returns the distance between two 3D points (used to get the most similar emoji color in the <os>.txt file to current pixel)
 def dist(x,y,z,x1,y1,z1): 
