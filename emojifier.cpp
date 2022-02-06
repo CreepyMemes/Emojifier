@@ -10,7 +10,7 @@
 #include "lib/stb_image_write.h"
 #define STB_IMAGE_RESIZE_IMPLEMENTATION
 #include "lib/stb_image_resize.h"
-namespace fs = std::filesystem;
+namespace fs = std::filesystem; //this only works in C++17 or higher
 using namespace std;
 
 //gets the n substring from s split by c ex: s = "a.b.c" -> getSubstr(s, '.', 1) = "b"
