@@ -4,7 +4,7 @@
 
 ## How to use Emojifier? <img src="https://images.emojiterra.com/twitter/v13.1/512px/1f914.png" alt="image" width="30"/>
 ### C++ 
-- Compile the cpp file inside a directory containing the lib folder in which the stb libraries are located
+- Compile the cpp file (with C++17 or higher) inside a directory containing the lib folder in which the stb libraries are located
 - libraries made by [Sean Barrett](https://github.com/nothings/stb)
 ### Python
 - Just run the python script
