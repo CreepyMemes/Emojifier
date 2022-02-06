@@ -22,12 +22,14 @@ def main():
 
     #Loads the image and resizes it according to input (input is width "col")
     img_raw = Image.open(f"{path}{name}").convert("RGB")
-    col     = int(input("Input image size: "))
-    img_raw = img_raw.resize( (col, int(img_raw.size[1] / (img_raw.size[0] / col))) )
+    width     = int(input("Input image size: "))
+    img_raw = img_raw.resize( (width, int(img_raw.size[1] / (img_raw.size[0] / width))) )
     #loads image pixels to pix and creates a 2d list img containing pixels
     pix     = img_raw.load()
-    width   = img_raw.size[1]
-    img     = [[pix[x, y] for x in range(img_raw.size[0])] for y in range(width)]
+    width   = img_raw.size[0]
+    height  = img_raw.size[1]
+    print(width)
+    img     = [[pix[x, y] for x in range(width)] for y in range(height)]
 
     #Opens the html result file and prints the heading for "utf-8" and "black background"
     out = open(f"{name.split('.')[0]}.html", "w")
@@ -41,12 +43,15 @@ def main():
 
     #Iterates through the image pixel by pixel from top to bottom
     print(f"\nConverting image: {name}")
+
     for count, row in enumerate(img):
-        progress((count+1)/len(row))
+        progress((count+1)/height)
+
         for item in row:
             distances = [dist(item[0], item[1], item[2], rgb[i][0][0], rgb[i][0][1], rgb[i][0][2]) for i in range(len(rgb))]
             out.write(rgb[distances.index(min(distances))][1])
         out.write("<br>")
+
     print("\nDone")
 
 if __name__ == '__main__':
