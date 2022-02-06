@@ -4,9 +4,9 @@
 
 ## How to use Emojifier? <img src="https://images.emojiterra.com/twitter/v13.1/512px/1f914.png" alt="image" width="30"/>
 ### C++ 
-- Compile the cpp file (with C++17 or higher) inside a directory containing the lib folder in which the stb libraries are located
+- Compile the cpp file (with C++17 or higher) inside a directory containing the lib folder in which the STB libraries are located
 #### Requirements
-- Download the STB libraries by @nothings
+- Download the STB libraries made by [@nothings](https://github.com/nothings) 
   - [stb_image.h](https://github.com/nothings/stb/blob/master/stb_image.h) 
   - [stb_image_resize.h](https://github.com/nothings/stb/blob/master/stb_image_resize.h) 
   - [stb_image_write.h](https://github.com/nothings/stb/blob/master/stb_image_write.h) 
