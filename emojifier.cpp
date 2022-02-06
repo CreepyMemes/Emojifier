@@ -3,16 +3,17 @@
 #include <string>
 #include <stdlib.h>
 #include <filesystem>
+//including Sean Barrett's image processing libraries https://github.com/nothings/stb
 #define STB_IMAGE_IMPLEMENTATION
 #include "lib/stb_image.h"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "lib/stb_image_write.h"
 #define STB_IMAGE_RESIZE_IMPLEMENTATION
 #include "lib/stb_image_resize.h"
-#include "resources.rc"
 namespace fs = std::filesystem;
 using namespace std;
 
+//gets the n substring from s split by c ex: s = "a.b.c" -> getSubstr(s, '.', 1) = "b"
 string getSubstr(string s, char c, int n){
     string r{}; int count{};
     for(char i: s){
@@ -21,7 +22,8 @@ string getSubstr(string s, char c, int n){
     }
     return r;
 }
-void progress(double progress){ //progress [0.0 -> 1.0]
+//prints a simple one line progress bar (argument [0.0 -> 1.0])
+void progress(double progress){
     int barLength = 50, pos = progress*barLength;
     cout << "Progress: [";
     for(int i = 0; i < barLength; i++){
@@ -30,6 +32,7 @@ void progress(double progress){ //progress [0.0 -> 1.0]
     }
     cout << "]  " << int(progress * 100.0) << " %\r";
 }
+//returns the distance between two 3D points (used to get the most similar emoji color in the emoji_os.tx file to current pixel)
 int dist (int x,int y,int z,int x1,int y1,int z1){
     return sqrt((x-x1)*(x-x1) + (y-y1)*(y-y1) + (z-z1)*(z-z1));
 }
@@ -72,10 +75,10 @@ int main(){
 	string line; 
 	for(int i=0; getline(in, line); tot=i++){
 		name[i] = getImg(line);
-        r[i]    = getRgb(line, 0);
-        g[i]    = getRgb(line, 1);
-        b[i]    = getRgb(line, 2);
-        cod[i]  = getCod(line);
+        	r[i]    = getRgb(line, 0);
+        	g[i]    = getRgb(line, 1);
+        	b[i]    = getRgb(line, 2);
+        	cod[i]  = getCod(line);
 	}
     //iterates through the image pixel by pixel while calculating the most similar emoji per current pixel
     cout << "\nConverting image: " << files[sel] << "\n";
@@ -83,7 +86,7 @@ int main(){
     for(unsigned char *p = img; p != img+img_size; p += channels){
         int dmin = 1000, imin{};
         for(int j=0; j<tot; j++){
-            int temp = dist(*p, *(p+1), *(p+2), r[j], g[j], b[j]);  // "+*var" the "+" promotes var to a type printable as a number, regardless of type. (not used, just a reminder) ex: 'A' -> 65
+            int temp = dist(*p, *(p+1), *(p+2), r[j], g[j], b[j]);
             if(dmin > temp){
                 dmin = temp;
                 imin = j;
