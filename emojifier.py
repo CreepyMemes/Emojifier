@@ -28,7 +28,6 @@ def main():
     pix     = img_raw.load()
     width   = img_raw.size[0]
     height  = img_raw.size[1]
-    print(width)
     img     = [[pix[x, y] for x in range(width)] for y in range(height)]
 
     #Opens the html result file and prints the heading for "utf-8" and "black background"
