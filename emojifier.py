@@ -18,7 +18,7 @@ def main():
     os_emoji = "windows"
     for idx, file in enumerate(glob(f"{path}*")):
         print(f"{idx}. {file[7:]}")   
-    name = glob(f"{path}*") [int(input("Select image to convert: "))] [7:]
+    name = glob(f"{path}*") [int(input("\nSelect image to convert: "))] [7:]
 
     #Loads the image and resizes it according to input (input is width "col")
     img_raw = Image.open(f"{path}{name}").convert("RGB")
@@ -47,6 +47,7 @@ def main():
             distances = [dist(item[0], item[1], item[2], rgb[i][0][0], rgb[i][0][1], rgb[i][0][2]) for i in range(len(rgb))]
             out.write(rgb[distances.index(min(distances))][1])
         out.write("<br>")
+    print("\nDone")
 
 if __name__ == '__main__':
     main()
