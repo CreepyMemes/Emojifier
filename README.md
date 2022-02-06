@@ -13,7 +13,7 @@
 ### Python
 - Just run the python script
 #### Requirements
-- intall the Pillow library
+- install the Pillow library
 ```
 python3 -m pip install --upgrade pip
 python3 -m pip install --upgrade Pillow
