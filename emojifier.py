@@ -22,7 +22,7 @@ def main():
 
     #Loads the image and resizes it according to input (input is width "col")
     img_raw = Image.open(f"{path}{name}").convert("RGB")
-    width     = int(input("Input image size: "))
+    width   = int(input("Input image size: "))
     img_raw = img_raw.resize( (width, int(img_raw.size[1] / (img_raw.size[0] / width))) )
     #loads image pixels to pix and creates a 2d list img containing pixels
     pix     = img_raw.load()
