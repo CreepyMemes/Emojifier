@@ -32,7 +32,7 @@ void progress(double progress){
     }
     cout << "]  " << int(progress * 100.0) << " %\r";
 }
-//returns the distance between two 3D points (used to get the most similar emoji color in the emoji_os.tx file to current pixel)
+//returns the distance between two 3D points (used to get the most similar emoji color in the <os>.txt file to current pixel)
 int dist (int x,int y,int z,int x1,int y1,int z1){
     return sqrt((x-x1)*(x-x1) + (y-y1)*(y-y1) + (z-z1)*(z-z1));
 }
