@@ -1,0 +1,54 @@
+from PIL import Image
+from math import sqrt
+from glob import glob
+import os
+
+def progress(n, l, img):
+    os.system('cls' if os.name == 'nt' else 'clear') #clears the output
+    n=round((n+1)/l*50.0)
+    print(f"Loading image: {img}")
+    print(f"Progress: [{'#'*n}{'-'*(50-n)}]  {n*2}%")
+
+def dist(x,y,z,x1,y1,z1): 
+    return sqrt( (x-x1)**2 + (y-y1)**2 + (z-z1)**2 )
+    
+def getName(s): 
+    return s.split(".")[0]
+
+def main():
+    #Prints all the files available in the folder images and asks for input which one to convert
+    path = "images/"
+    os_emoji = "windows"
+    for idx, file in enumerate(glob(f"{path}*")):
+        print(f"{idx}. {file[7:]}")   
+    name = glob(f"{path}*") [int(input("Select image to convert: "))] [7:]
+
+    #Loads the image and resizes it according to input (input is width "col")
+    img_raw = Image.open(f"{path}{name}").convert("RGB")
+    col = int(input("Input image size: "))
+    img_raw = img_raw.resize( (col, int(img_raw.size[1] / (img_raw.size[0] / col))) )
+    #loads image pixels to pix and creates a 2d list img containing pixels
+    pix = img_raw.load()
+    width = img_raw.size[1]
+    img = [[pix[x, y] for x in range(img_raw.size[0])] for y in range(width)]
+
+    #Opens the html result file and prints the heading for "utf-8" and "black background"
+    out = open(f"{getName(name)}.html", "w")
+    out.write('<meta charset="UTF-8">\n')
+    out.write('<body style="background-color:black;">\n')
+
+    #Saves data from file in a dictionary {"name.png", [r,g,b], "&#xUNICODE"}
+    with open(f"data\{os_emoji}.txt", "r") as inp:
+        data = {line.split(":")[0] : (list(map(int, line.split(":")[1].split(","))), line.split(":")[2][:-1]) for line in inp}
+    rgb = list(data.values()) #turns rgb values in a list from dictionary data
+
+    #Iterates through the image pixel by pixel from top to bottom
+    for count, row in enumerate(img):
+        progress(count, width, name)
+        for item in row:
+            distances = [dist(item[0], item[1], item[2], rgb[i][0][0], rgb[i][0][1], rgb[i][0][2]) for i in range(len(rgb))]
+            out.write(rgb[distances.index(min(distances))][1])
+        out.write("<br>")
+
+if __name__ == '__main__':
+    main()
