@@ -15,8 +15,7 @@
 #### Requirements
 - install the Pillow library
 ```
-python3 -m pip install --upgrade pip
-python3 -m pip install --upgrade Pillow
+pip install pillow
 ```
 ### Run the program in the same directory that contains the folders (images and data)
 ---
