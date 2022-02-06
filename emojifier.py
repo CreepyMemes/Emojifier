@@ -42,15 +42,12 @@ def main():
 
     #Iterates through the image pixel by pixel from top to bottom
     print(f"\nConverting image: {name}")
-
     for count, row in enumerate(img):
         progress((count+1)/height)
-
         for item in row:
             distances = [dist(item[0], item[1], item[2], rgb[i][0][0], rgb[i][0][1], rgb[i][0][2]) for i in range(len(rgb))]
             out.write(rgb[distances.index(min(distances))][1])
         out.write("<br>")
-
     print("\nDone")
 
 if __name__ == '__main__':
