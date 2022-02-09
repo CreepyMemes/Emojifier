@@ -3,7 +3,7 @@
 #include <string>
 #include <stdlib.h>
 #include <filesystem>
-//including @nothings's image processing libraries https://github.com/nothings/stb
+//including Sean Barrett's image processing libraries https://github.com/nothings/stb
 #define STB_IMAGE_IMPLEMENTATION
 #include "lib/stb_image.h"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
@@ -13,15 +13,6 @@
 namespace fs = std::filesystem; //this only works in C++17 or higher
 using namespace std;
 
-//gets the n substring from s split by c ex: s = "a.b.c" -> getSubstr(s, '.', 1) = "b"
-string getSubstr(string s, char c, int n){
-    string r{}; int count{};
-    for(char i: s){
-        if(i==c)     {count++; continue;}
-        if(count==n) {r+=i;}
-    }
-    return r;
-}
 //prints a simple one line progress bar (argument [0.0 -> 1.0])
 void progress(double progress){
     int barLength = 50, pos = progress*barLength;
@@ -36,10 +27,25 @@ void progress(double progress){
 int dist (int x,int y,int z,int x1,int y1,int z1){
     return sqrt((x-x1)*(x-x1) + (y-y1)*(y-y1) + (z-z1)*(z-z1));
 }
+//gets the n substring from s split by c ex: s = "a.b.c" -> getSubstr(s, '.', 1) = "b"
+string getSubstr(string s, char c, int n){
+    string r{}; int count{};
+    for(char i: s){
+        if(i==c)     {count++; continue;}
+        if(count==n) {r+=i;}
+    }
+    return r;
+}
 string getImg (string s)         {return getSubstr(s, ':', 0);}
 int    getRgb (string s, char c) {return stoi(getSubstr(getSubstr(s, ':', 1), ',', c));}
 string getCod (string s)         {return getSubstr(s, ':', 2);}
 string getName(string s)         {return getSubstr(s, '.', 0);}
+
+//emoji data variables struct
+struct emojiData{
+    string name, cod;
+    int r, g, b;
+};
 
 int main(){
     //Prints all the files available in the folder images and asks for input which one to convert
@@ -66,34 +72,30 @@ int main(){
     ofstream out(getName(files[sel])+".html"); out<<"<meta charset=\"UTF-8\">\n<body style=\"background-color:black;\">\n";
 
     //declares data variables
-    int tot = 4000; //max emojis available in .txt file
-    string name[tot]{};
-    int    r[tot]{},g[tot]{},b[tot]{};
-    string cod[tot]{};
-
+    int tot = 4000;
+    emojiData emoji[tot];
     //iterates through the txt file line by line asigning the data variables
-    string line; 
-    for(int i=0; getline(in, line); tot=i++){
-	name[i] = getImg(line);
-        r[i]    = getRgb(line, 0);
-        g[i]    = getRgb(line, 1);
-        b[i]    = getRgb(line, 2);
-        cod[i]  = getCod(line);
-    }
-	
+	string line; 
+	for(int i=0; getline(in, line); tot=i++){
+		emoji[i].name = getImg(line);
+        emoji[i].r    = getRgb(line, 0);
+        emoji[i].g    = getRgb(line, 1);
+        emoji[i].b    = getRgb(line, 2);
+        emoji[i].cod  = getCod(line);
+	}
     //iterates through the image pixel by pixel while calculating the most similar emoji per current pixel
     cout << "\nConverting image: " << files[sel] << "\n";
     size_t img_size = rwidth * rheight * channels, i{}, count{};
     for(unsigned char *p = img; p != img+img_size; p += channels){
         int dmin = 1000, imin{};
         for(int j=0; j<tot; j++){
-            int temp = dist(*p, *(p+1), *(p+2), r[j], g[j], b[j]);
+            int temp = dist(*p, *(p+1), *(p+2), emoji[j].r, emoji[j].g, emoji[j].b);
             if(dmin > temp){
                 dmin = temp;
                 imin = j;
             }
         }     
-        out<<cod[imin];
+        out<<emoji[imin].cod;
         if(++i==rwidth) {out << "<br>"; progress(double(++count)/double(rheight)); i=0;}
     }
     stbi_image_free(img);
