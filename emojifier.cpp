@@ -75,14 +75,14 @@ int main(){
     int tot = 4000;
     emojiData emoji[tot];
     //iterates through the txt file line by line asigning the data variables
-	string line; 
-	for(int i=0; getline(in, line); tot=i++){
-		emoji[i].name = getImg(line);
+    string line; 
+    for(int i=0; getline(in, line); tot=i++){
+	emoji[i].name = getImg(line);
         emoji[i].r    = getRgb(line, 0);
         emoji[i].g    = getRgb(line, 1);
         emoji[i].b    = getRgb(line, 2);
         emoji[i].cod  = getCod(line);
-	}
+    }
     //iterates through the image pixel by pixel while calculating the most similar emoji per current pixel
     cout << "\nConverting image: " << files[sel] << "\n";
     size_t img_size = rwidth * rheight * channels, i{}, count{};
