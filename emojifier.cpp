@@ -3,7 +3,7 @@
 #include <string>
 #include <stdlib.h>
 #include <filesystem>
-//including Sean Barrett's image processing libraries https://github.com/nothings/stb
+//including @nothings's image processing libraries https://github.com/nothings/stb
 #define STB_IMAGE_IMPLEMENTATION
 #include "lib/stb_image.h"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
@@ -72,14 +72,15 @@ int main(){
     string cod[tot]{};
 
     //iterates through the txt file line by line asigning the data variables
-	string line; 
-	for(int i=0; getline(in, line); tot=i++){
-		name[i] = getImg(line);
-        	r[i]    = getRgb(line, 0);
-        	g[i]    = getRgb(line, 1);
-        	b[i]    = getRgb(line, 2);
-        	cod[i]  = getCod(line);
-	}
+    string line; 
+    for(int i=0; getline(in, line); tot=i++){
+	name[i] = getImg(line);
+        r[i]    = getRgb(line, 0);
+        g[i]    = getRgb(line, 1);
+        b[i]    = getRgb(line, 2);
+        cod[i]  = getCod(line);
+    }
+	
     //iterates through the image pixel by pixel while calculating the most similar emoji per current pixel
     cout << "\nConverting image: " << files[sel] << "\n";
     size_t img_size = rwidth * rheight * channels, i{}, count{};
